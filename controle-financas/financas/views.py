@@ -4,7 +4,11 @@ from .forms import LancamentoForm
 
 def listar_dividas(request):
     dividas = Lancamento.objects.all()
-    return render(request, 'listar_dividas.html', {'dividas': dividas})
+    total_dividas = sum(divida.valor for divida in dividas if not divida.foi_pago)
+    return render(request, 'listar_dividas.html', {'dividas': dividas, 'total_dividas': total_dividas})
+
+    
+
 
 def cadastrar_dividas(request):
     if request.method == 'POST':
@@ -15,3 +19,11 @@ def cadastrar_dividas(request):
     else:
         form = LancamentoForm()
     return render(request, 'cadastrar_dividas.html', {'form': form})
+
+
+def pagar_divida(request, id):
+    divida = Lancamento.objects.get(id=id)
+    divida.foi_pago = True
+    divida.save()
+    return redirect('listar_dividas')
+

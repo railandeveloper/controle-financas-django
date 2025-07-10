@@ -39,6 +39,11 @@
         {{ form.categoria|add_class:"form-select" }}
       </div>
 
+      <div class="mb-3">
+        <label for="id_vencimento" class="form-label">Vencimento</label>
+        {{ form.vencimento|add_class:"form-control" }}
+      </div>
+
       <button type="submit" class="btn btn-success">Salvar</button>
       <a href="{% url 'listar_dividas' %}" class="btn btn-secondary ms-2">Voltar</a>
     </form>
