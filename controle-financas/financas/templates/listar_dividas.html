@@ -11,6 +11,12 @@
     <h1 class="mb-4">💸 Lista de Dívidas</h1>
     <h3>Total de dívidas em aberto: R$ {{ total_dividas|floatformat:2 }}</h3>
 
+    <div>
+      <a href="?filtro=todas">Todas</a> |
+      <a href="?filtro=abertas">Em Aberto</a> |
+      <a href="?filtro=pagas">Pagas</a>
+    </div>
+
 
 
     <ul class="list-group mb-4">

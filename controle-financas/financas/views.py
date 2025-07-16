@@ -3,9 +3,22 @@ from .models import Lancamento
 from .forms import LancamentoForm
 
 def listar_dividas(request):
-    dividas = Lancamento.objects.all()
+    filtro = request.GET.get('filtro', 'abertas')  # muda o padrão para mostrar só abertas
+
+    if filtro == 'pagas':
+        dividas = Lancamento.objects.filter(foi_pago=True)
+    elif filtro == 'abertas':
+        dividas = Lancamento.objects.filter(foi_pago=False)
+    else:
+        dividas = Lancamento.objects.filter(foi_pago=False)  # para qualquer outro caso, só abertas
+
     total_dividas = sum(divida.valor for divida in dividas if not divida.foi_pago)
-    return render(request, 'listar_dividas.html', {'dividas': dividas, 'total_dividas': total_dividas})
+    
+    return render(request, 'listar_dividas.html', {
+        'dividas': dividas,
+        'total_dividas': total_dividas,
+        'filtro': filtro
+    })
 
     
 
